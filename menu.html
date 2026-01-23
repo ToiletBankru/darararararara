@@ -59,20 +59,17 @@ html, body {
 .topbar {
     height: 56px;
     padding: 0 18px;
-
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-/* menu */
 .menu {
     font-size: 22px;
     color: #ffffff;
     cursor: pointer;
 }
 
-/* search */
 .search {
     font-size: 18px;
     font-weight: 600;
@@ -80,7 +77,6 @@ html, body {
     opacity: 0.9;
 }
 
-/* avatar */
 .avatar {
     width: 34px;
     height: 34px;
@@ -93,6 +89,47 @@ html, body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* INBOX TITLE */
+.inbox-title {
+    padding: 12px 18px 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* MAIL LIST */
+.mail-list {
+    padding: 0 12px;
+}
+
+/* MAIL ITEM */
+.mail {
+    padding: 14px 14px;
+    margin-bottom: 10px;
+
+    background: rgba(255,255,255,0.08);
+    border-radius: 14px;
+
+    color: #ffffff;
+}
+
+.mail-from {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.mail-subject {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+.mail-preview {
+    font-size: 13px;
+    opacity: 0.6;
+    margin-top: 2px;
 }
 </style>
 </head>
@@ -111,7 +148,19 @@ html, body {
             </div>
         </div>
 
-        <!-- тут потом будут письма -->
+        <!-- INBOX -->
+        <div class="inbox-title">Inbox</div>
+
+        <!-- TEST MAIL -->
+        <div class="mail-list">
+            <div class="mail">
+                <div class="mail-from">SvinMail Team</div>
+                <div class="mail-subject">Welcome to SvinMail 🐷📬</div>
+                <div class="mail-preview">
+                    Your mailbox is ready. Enjoy secure and private email.
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

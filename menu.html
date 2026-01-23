@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>SvinMail</title>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+    background: url("background.png") center / cover no-repeat;
+}
+
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background: url("background1.png") center / cover no-repeat;
+    }
+}
+
+.app {
+    height: 100vh;
+    padding: 24px 16px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.glass {
+    width: 100%;
+    max-width: 390px;
+    height: calc(100vh - 48px);
+
+    background: rgba(14, 18, 32, 0.6);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+
+    border-radius: 28px;
+    border: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 0 0 1px rgba(255,255,255,0.05);
+
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP BAR */
+.topbar {
+    height: 56px;
+    padding: 0 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* menu */
+.menu {
+    font-size: 22px;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+/* search */
+.search {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+/* avatar */
+.avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    overflow: hidden;
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+    <div class="glass">
+
+        <!-- TOP BAR -->
+        <div class="topbar">
+            <div class="menu">☰</div>
+            <div class="search">Search</div>
+            <div class="avatar">
+                <img id="avatarImg" alt="">
+            </div>
+        </div>
+
+        <!-- тут потом будут письма -->
+
+    </div>
+</div>
+
+<script>
+const tg = window.Telegram.WebApp;
+tg.ready();
+tg.expand();
+
+/* аватар из Telegram */
+const user = tg.initDataUnsafe?.user;
+const avatar = document.getElementById("avatarImg");
+
+if (user && user.photo_url) {
+    avatar.src = user.photo_url;
+} else {
+    avatar.style.display = "none";
+}
+</script>
+
+</body>
+</html>

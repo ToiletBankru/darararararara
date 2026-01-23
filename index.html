@@ -33,7 +33,6 @@ html, body {
     height: 100vh;
     padding: 24px 16px;
     box-sizing: border-box;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -99,10 +98,8 @@ html, body {
     height: 52px;
     border-radius: 14px;
     border: none;
-
     font-size: 17px;
     font-weight: 600;
-
     cursor: pointer;
 }
 </style>
@@ -141,13 +138,11 @@ function applyTheme() {
 }
 
 applyTheme();
-
-/* обновление при смене темы */
 tg.onEvent("themeChanged", applyTheme);
 
-/* обработчик кнопки */
+/* редирект */
 document.getElementById("loginBtn").addEventListener("click", () => {
-    tg.showAlert("Log in clicked 🚀");
+    window.location.href = "https://meme.horsefucker.ru/menu.html";
 });
 </script>
 

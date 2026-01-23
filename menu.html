@@ -16,7 +16,6 @@ html, body {
     height: 100%;
     overflow: hidden;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-
     background: url("background.png") center / cover no-repeat;
 }
 
@@ -35,24 +34,23 @@ html, body {
     justify-content: center;
 }
 
+/* GLASS */
 .glass {
     width: 100%;
     max-width: 390px;
     height: calc(100vh - 48px);
-
     background: rgba(14, 18, 32, 0.6);
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
-
     border-radius: 28px;
     border: 1px solid rgba(255,255,255,0.12);
-
     box-shadow:
         0 20px 60px rgba(0,0,0,0.5),
         inset 0 0 0 1px rgba(255,255,255,0.05);
-
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
 }
 
 /* TOP BAR */
@@ -91,7 +89,7 @@ html, body {
     object-fit: cover;
 }
 
-/* INBOX TITLE */
+/* INBOX */
 .inbox-title {
     padding: 12px 18px 6px;
     font-size: 20px;
@@ -99,19 +97,15 @@ html, body {
     color: #ffffff;
 }
 
-/* MAIL LIST */
 .mail-list {
     padding: 0 12px;
 }
 
-/* MAIL ITEM */
 .mail {
-    padding: 14px 14px;
+    padding: 14px;
     margin-bottom: 10px;
-
     background: rgba(255,255,255,0.08);
     border-radius: 14px;
-
     color: #ffffff;
 }
 
@@ -131,27 +125,96 @@ html, body {
     opacity: 0.6;
     margin-top: 2px;
 }
+
+/* OVERLAY */
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 5;
+}
+
+/* SIDEBAR */
+.sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 240px;
+    height: 100%;
+    background: rgba(18, 22, 38, 0.75);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border-right: 1px solid rgba(255,255,255,0.12);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 6;
+    padding: 24px 16px;
+    box-sizing: border-box;
+}
+
+.sidebar h3 {
+    color: #ffffff;
+    margin: 0 0 20px;
+    font-size: 20px;
+}
+
+.sidebar-item {
+    padding: 12px 10px;
+    border-radius: 10px;
+    color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+
+.sidebar-item:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* OPEN STATE */
+.glass.menu-open .sidebar {
+    transform: translateX(0);
+}
+
+.glass.menu-open .overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
 </style>
 </head>
 
 <body>
 
 <div class="app">
-    <div class="glass">
+    <div class="glass" id="glass">
+
+        <!-- SIDEBAR -->
+        <div class="sidebar">
+            <h3>SvinMail</h3>
+            <div class="sidebar-item">📥 Inbox</div>
+            <div class="sidebar-item">⭐ Starred</div>
+            <div class="sidebar-item">📤 Sent</div>
+            <div class="sidebar-item">🗑 Trash</div>
+            <div class="sidebar-item">⚙ Settings</div>
+        </div>
+
+        <!-- OVERLAY -->
+        <div class="overlay" id="overlay"></div>
 
         <!-- TOP BAR -->
         <div class="topbar">
-            <div class="menu">☰</div>
+            <div class="menu" id="menuBtn">☰</div>
             <div class="search">Search</div>
             <div class="avatar">
                 <img id="avatarImg" alt="">
             </div>
         </div>
 
-        <!-- INBOX -->
         <div class="inbox-title">Inbox</div>
 
-        <!-- TEST MAIL -->
         <div class="mail-list">
             <div class="mail">
                 <div class="mail-from">SvinMail Team</div>
@@ -170,15 +233,18 @@ const tg = window.Telegram.WebApp;
 tg.ready();
 tg.expand();
 
-/* аватар из Telegram */
+/* AVATAR */
 const user = tg.initDataUnsafe?.user;
 const avatar = document.getElementById("avatarImg");
+if (user && user.photo_url) avatar.src = user.photo_url;
 
-if (user && user.photo_url) {
-    avatar.src = user.photo_url;
-} else {
-    avatar.style.display = "none";
-}
+/* MENU */
+const glass = document.getElementById("glass");
+const menuBtn = document.getElementById("menuBtn");
+const overlay = document.getElementById("overlay");
+
+menuBtn.onclick = () => glass.classList.add("menu-open");
+overlay.onclick = () => glass.classList.remove("menu-open");
 </script>
 
 </body>
